@@ -1,0 +1,54 @@
+---
+title: "Week 1"
+author: "James Black - 4th August 2014"
+date: "9 August 2014"
+output: html_document
+---
+
+First the quiz
+
+```{r quiz}
+setwd("~/datasciencecoursera/rprogramming")
+
+hw1_data <- read.csv("hw1_data.csv")
+
+# Column names
+  names(hw1_data)
+# First two rows
+  head(hw1_data, 2)
+# Number of rows/observations
+  nrow(hw1_data)
+# Last two rows
+  tail(hw1_data, 2)
+# Ozone on the 47th row
+  hw1_data[47,"Ozone"]
+# missing in Ozone
+  sum(is.na(hw1_data[,"Ozone"]))
+# Mean of Ozone
+  mean(hw1_data[,"Ozone"], na.rm=T)
+# When Ozone values > 31 and Temp > 90. What is the mean of Solar.R
+  mean(
+    (subset(hw1_data, 
+         Ozone > 31 & Temp > 90, 
+         select=c(Solar.R)))[,"Solar.R"]
+    )
+# Mean of "Temp" when "Month" is equal to 6
+  mean(
+    (subset(hw1_data, 
+         Month == 6, 
+         select=c(Temp)))[,"Temp"]
+    )
+# What was the maximum ozone value in the month of May (i.e. Month = 5)
+  max(
+    (subset(hw1_data, 
+      Month == 5, 
+      select=c(Ozone)))[,"Ozone"]
+    ,na.rm=T)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+
+```
+
