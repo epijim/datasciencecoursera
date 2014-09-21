@@ -4,6 +4,7 @@ author: "James Black"
 date: "21 September 2014"
 output:
   html_document:
+    keep_md: true
     toc: true
     toc_depth: 2
 ---
