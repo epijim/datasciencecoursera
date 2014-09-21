@@ -2,7 +2,7 @@
 James Black  
 21 September 2014  
 
-Codebook was generated on 2014-09-21 16:52:56 during the same process that generated the dataset. See `run_analysis.r`.
+Codebook was generated on 2014-09-21 17:13:43 during the same process that generated the dataset. See `run_analysis.r`.
 
 # Source
 
@@ -11,6 +11,14 @@ Smartlab - Non Linear Complex Systems Laboratory
 DITEN - UniversitÃ  degli Studi di Genova, Genoa I-16145, Italy. 
 activityrecognition '@' smartlab.ws 
 www.smartlab.ws 
+
+# About the contents of the repo
+
+The Codebook rmd is an r markdown file that explains the data, and **from that markdown file the analysis script is called**. The data is also contained in this repo. 
+
+The script merges the training and test datasets, and outputs a tidy dataset which has an observation for sd, average for every combination of features.
+
+**This Readme is derived from Codebook.Rmd.**
 
 # Methods for collection
 
@@ -35,17 +43,17 @@ For each record in the dataset it is provided:
 
 Variable name    | Description
 -----------------|------------
-subject          | ID for subject
-activity         | What activity
-featDomain       | Time domain signal or frequency domain signal (Time or Freq)
-featInstrument   | Measuring instrument (Accelerometer or Gyroscope)
-featAcceleration | Acceleration signal (Body or Gravity)
-featVariable     | Variable (Mean or SD)
-featJerk         | Jerk signal
-featMagnitude    | Magnitude of the signals calculated using the Euclidean norm
-featAxis         | 3-axial signals in the X, Y and Z directions (X, Y, or Z)
-featCount        | Count of data points used to compute `average`
-featAverage      | Average of each variable for each activity and each subject
+subject          | An identifier of the subject who carried out the experiment
+activity         | Activity label
+varDomain        | Time or domain signal
+varInstrument    | Accelerometer or Gyroscope
+varAcceleration  | Body or Gravity
+varVariable      | Mean or SD
+varJerk          | Jerk signal
+varMagnitude     | Magnitude of the signals calculated using the Euclidean norm
+varAxis          | 3-axial signals in the X, Y and Z directions (X, Y, or Z)
+varCount         | Number of datapoints in the average
+varAverage       | The computed variable
 
 # The set up script
 
@@ -185,31 +193,31 @@ featAverage      | Average of each variable for each activity and each subject
 ## 
 ## > x <- matrix(c(grepthis("^t"), grepthis("^f")), ncol = nrow(y))
 ## 
-## > dt$featDomain <- factor(x %*% y, labels = c("Time", 
+## > dt$varDomain <- factor(x %*% y, labels = c("Time", 
 ## +     "Freq"))
 ## 
 ## > x <- matrix(c(grepthis("Acc"), grepthis("Gyro")), 
 ## +     ncol = nrow(y))
 ## 
-## > dt$featInstrument <- factor(x %*% y, labels = c("Accelerometer", 
+## > dt$varInstrument <- factor(x %*% y, labels = c("Accelerometer", 
 ## +     "Gyroscope"))
 ## 
 ## > x <- matrix(c(grepthis("BodyAcc"), grepthis("GravityAcc")), 
 ## +     ncol = nrow(y))
 ## 
-## > dt$featAcceleration <- factor(x %*% y, labels = c(NA, 
+## > dt$varAcceleration <- factor(x %*% y, labels = c(NA, 
 ## +     "Body", "Gravity"))
 ## 
 ## > x <- matrix(c(grepthis("mean()"), grepthis("std()")), 
 ## +     ncol = nrow(y))
 ## 
-## > dt$featVariable <- factor(x %*% y, labels = c("Mean", 
+## > dt$varVariable <- factor(x %*% y, labels = c("Mean", 
 ## +     "SD"))
 ## 
-## > dt$featJerk <- factor(grepthis("Jerk"), labels = c(NA, 
+## > dt$varJerk <- factor(grepthis("Jerk"), labels = c(NA, 
 ## +     "Jerk"))
 ## 
-## > dt$featMagnitude <- factor(grepthis("Mag"), labels = c(NA, 
+## > dt$varMagnitude <- factor(grepthis("Mag"), labels = c(NA, 
 ## +     "Magnitude"))
 ## 
 ## > n <- 3
@@ -219,20 +227,20 @@ featAverage      | Average of each variable for each activity and each subject
 ## > x <- matrix(c(grepthis("-X"), grepthis("-Y"), grepthis("-Z")), 
 ## +     ncol = nrow(y))
 ## 
-## > dt$featAxis <- factor(x %*% y, labels = c(NA, "X", 
+## > dt$varAxis <- factor(x %*% y, labels = c(NA, "X", 
 ## +     "Y", "Z"))
 ## 
 ## > r1 <- nrow(dt[, .N, by = c("feature")])
 ## 
-## > r2 <- nrow(dt[, .N, by = c("featDomain", "featAcceleration", 
-## +     "featInstrument", "featJerk", "featMagnitude", "featVariable", 
-## +     "featAxis" .... [TRUNCATED] 
+## > r2 <- nrow(dt[, .N, by = c("varDomain", "varAcceleration", 
+## +     "varInstrument", "varJerk", "varMagnitude", "varVariable", 
+## +     "varAxis")])
 ## 
 ## > r1 == r2
 ## [1] TRUE
 ## 
-## > setkey(dt, subject, activity, featDomain, featAcceleration, 
-## +     featInstrument, featJerk, featMagnitude, featVariable, featAxis)
+## > setkey(dt, subject, activity, varDomain, varAcceleration, 
+## +     varInstrument, varJerk, varMagnitude, varVariable, varAxis)
 ## 
 ## > dtTidy <- dt[, list(count = .N, average = mean(value)), 
 ## +     by = key(dt)]
@@ -252,18 +260,18 @@ str(dtTidy)
 
 ```
 ## Classes 'data.table' and 'data.frame':	11880 obs. of  11 variables:
-##  $ subject         : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ activity        : Factor w/ 6 levels "LAYING","SITTING",..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ featDomain      : Factor w/ 2 levels "Time","Freq": 1 1 1 1 1 1 1 1 1 1 ...
-##  $ featAcceleration: Factor w/ 3 levels NA,"Body","Gravity": 1 1 1 1 1 1 1 1 1 1 ...
-##  $ featInstrument  : Factor w/ 2 levels "Accelerometer",..: 2 2 2 2 2 2 2 2 2 2 ...
-##  $ featJerk        : Factor w/ 2 levels NA,"Jerk": 1 1 1 1 1 1 1 1 2 2 ...
-##  $ featMagnitude   : Factor w/ 2 levels NA,"Magnitude": 1 1 1 1 1 1 2 2 1 1 ...
-##  $ featVariable    : Factor w/ 2 levels "Mean","SD": 1 1 1 2 2 2 1 2 1 1 ...
-##  $ featAxis        : Factor w/ 4 levels NA,"X","Y","Z": 2 3 4 2 3 4 1 1 2 3 ...
-##  $ count           : int  50 50 50 50 50 50 50 50 50 50 ...
-##  $ average         : num  -0.0166 -0.0645 0.1487 -0.8735 -0.9511 ...
-##  - attr(*, "sorted")= chr  "subject" "activity" "featDomain" "featAcceleration" ...
+##  $ subject        : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ activity       : Factor w/ 6 levels "LAYING","SITTING",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ varDomain      : Factor w/ 2 levels "Time","Freq": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ varAcceleration: Factor w/ 3 levels NA,"Body","Gravity": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ varInstrument  : Factor w/ 2 levels "Accelerometer",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ varJerk        : Factor w/ 2 levels NA,"Jerk": 1 1 1 1 1 1 1 1 2 2 ...
+##  $ varMagnitude   : Factor w/ 2 levels NA,"Magnitude": 1 1 1 1 1 1 2 2 1 1 ...
+##  $ varVariable    : Factor w/ 2 levels "Mean","SD": 1 1 1 2 2 2 1 2 1 1 ...
+##  $ varAxis        : Factor w/ 4 levels NA,"X","Y","Z": 2 3 4 2 3 4 1 1 2 3 ...
+##  $ count          : int  50 50 50 50 50 50 50 50 50 50 ...
+##  $ average        : num  -0.0166 -0.0645 0.1487 -0.8735 -0.9511 ...
+##  - attr(*, "sorted")= chr  "subject" "activity" "varDomain" "varAcceleration" ...
 ##  - attr(*, ".internal.selfref")=<externalptr>
 ```
 
@@ -275,20 +283,20 @@ head(dtTidy)
 ```
 
 ```
-##    subject activity featDomain featAcceleration featInstrument featJerk
-## 1:       1   LAYING       Time               NA      Gyroscope       NA
-## 2:       1   LAYING       Time               NA      Gyroscope       NA
-## 3:       1   LAYING       Time               NA      Gyroscope       NA
-## 4:       1   LAYING       Time               NA      Gyroscope       NA
-## 5:       1   LAYING       Time               NA      Gyroscope       NA
-## 6:       1   LAYING       Time               NA      Gyroscope       NA
-##    featMagnitude featVariable featAxis count  average
-## 1:            NA         Mean        X    50 -0.01655
-## 2:            NA         Mean        Y    50 -0.06449
-## 3:            NA         Mean        Z    50  0.14869
-## 4:            NA           SD        X    50 -0.87354
-## 5:            NA           SD        Y    50 -0.95109
-## 6:            NA           SD        Z    50 -0.90828
+##    subject activity varDomain varAcceleration varInstrument varJerk
+## 1:       1   LAYING      Time              NA     Gyroscope      NA
+## 2:       1   LAYING      Time              NA     Gyroscope      NA
+## 3:       1   LAYING      Time              NA     Gyroscope      NA
+## 4:       1   LAYING      Time              NA     Gyroscope      NA
+## 5:       1   LAYING      Time              NA     Gyroscope      NA
+## 6:       1   LAYING      Time              NA     Gyroscope      NA
+##    varMagnitude varVariable varAxis count  average
+## 1:           NA        Mean       X    50 -0.01655
+## 2:           NA        Mean       Y    50 -0.06449
+## 3:           NA        Mean       Z    50  0.14869
+## 4:           NA          SD       X    50 -0.87354
+## 5:           NA          SD       Y    50 -0.95109
+## 6:           NA          SD       Z    50 -0.90828
 ```
 
 # Summary of the variables
@@ -299,20 +307,20 @@ summary(dtTidy)
 ```
 
 ```
-##     subject                   activity    featDomain  featAcceleration
-##  Min.   : 1.0   LAYING            :1980   Time:7200   NA     :4680    
-##  1st Qu.: 8.0   SITTING           :1980   Freq:4680   Body   :5760    
-##  Median :15.5   STANDING          :1980               Gravity:1440    
-##  Mean   :15.5   WALKING           :1980                               
-##  3rd Qu.:23.0   WALKING_DOWNSTAIRS:1980                               
-##  Max.   :30.0   WALKING_UPSTAIRS  :1980                               
-##        featInstrument featJerk      featMagnitude  featVariable featAxis 
-##  Accelerometer:7200   NA  :7200   NA       :8640   Mean:5940    NA:3240  
-##  Gyroscope    :4680   Jerk:4680   Magnitude:3240   SD  :5940    X :2880  
-##                                                                 Y :2880  
-##                                                                 Z :2880  
-##                                                                          
-##                                                                          
+##     subject                   activity    varDomain   varAcceleration
+##  Min.   : 1.0   LAYING            :1980   Time:7200   NA     :4680   
+##  1st Qu.: 8.0   SITTING           :1980   Freq:4680   Body   :5760   
+##  Median :15.5   STANDING          :1980               Gravity:1440   
+##  Mean   :15.5   WALKING           :1980                              
+##  3rd Qu.:23.0   WALKING_DOWNSTAIRS:1980                              
+##  Max.   :30.0   WALKING_UPSTAIRS  :1980                              
+##        varInstrument  varJerk        varMagnitude  varVariable varAxis  
+##  Accelerometer:7200   NA  :7200   NA       :8640   Mean:5940   NA:3240  
+##  Gyroscope    :4680   Jerk:4680   Magnitude:3240   SD  :5940   X :2880  
+##                                                                Y :2880  
+##                                                                Z :2880  
+##                                                                         
+##                                                                         
 ##      count         average       
 ##  Min.   :36.0   Min.   :-0.9977  
 ##  1st Qu.:49.0   1st Qu.:-0.9621  

@@ -114,35 +114,35 @@
   n <- 2
   y <- matrix(seq(1, n), nrow=n)
   x <- matrix(c(grepthis("^t"), grepthis("^f")), ncol=nrow(y))
-  dt$featDomain <- factor(x %*% y, labels=c("Time", "Freq"))
+  dt$varDomain <- factor(x %*% y, labels=c("Time", "Freq"))
   x <- matrix(c(grepthis("Acc"), grepthis("Gyro")), ncol=nrow(y))
-  dt$featInstrument <- factor(x %*% y, labels=c("Accelerometer", "Gyroscope"))
+  dt$varInstrument <- factor(x %*% y, labels=c("Accelerometer", "Gyroscope"))
   x <- matrix(c(grepthis("BodyAcc"), grepthis("GravityAcc")), ncol=nrow(y))
-  dt$featAcceleration <- factor(x %*% y, labels=c(NA, "Body", "Gravity"))
+  dt$varAcceleration <- factor(x %*% y, labels=c(NA, "Body", "Gravity"))
   x <- matrix(c(grepthis("mean()"), grepthis("std()")), ncol=nrow(y))
-  dt$featVariable <- factor(x %*% y, labels=c("Mean", "SD"))
+  dt$varVariable <- factor(x %*% y, labels=c("Mean", "SD"))
   ## Features with 1 category
-  dt$featJerk <- factor(grepthis("Jerk"), labels=c(NA, "Jerk"))
-  dt$featMagnitude <- factor(grepthis("Mag"), labels=c(NA, "Magnitude"))
+  dt$varJerk <- factor(grepthis("Jerk"), labels=c(NA, "Jerk"))
+  dt$varMagnitude <- factor(grepthis("Mag"), labels=c(NA, "Magnitude"))
   ## Features with 3 categories
   n <- 3
   y <- matrix(seq(1, n), nrow=n)
   x <- matrix(c(grepthis("-X"), grepthis("-Y"), grepthis("-Z")), ncol=nrow(y))
-  dt$featAxis <- factor(x %*% y, labels=c(NA, "X", "Y", "Z"))
+  dt$varAxis <- factor(x %*% y, labels=c(NA, "X", "Y", "Z"))
 
 
 # Check to make sure all possible combinations of `feature` are accounted for by all 
 #   possible combinations of the factor class variables.
   r1 <- nrow(dt[, .N, by=c("feature")])
-  r2 <- nrow(dt[, .N, by=c("featDomain", "featAcceleration", "featInstrument", "featJerk", 
-                           "featMagnitude", "featVariable", "featAxis")])
+  r2 <- nrow(dt[, .N, by=c("varDomain", "varAcceleration", "varInstrument", "varJerk", 
+                           "varMagnitude", "varVariable", "varAxis")])
   r1 == r2
 
 # Create a tidy data set
   # Create a data set with the average of each variable for each activity and each subject.
   setkey(dt, 
-         subject, activity, featDomain, featAcceleration, featInstrument, featJerk, 
-         featMagnitude, featVariable, featAxis)
+         subject, activity, varDomain, varAcceleration, varInstrument, varJerk, 
+         varMagnitude, varVariable, varAxis)
   dtTidy <- dt[, list(count = .N, average = mean(value)), by=key(dt)]
   f <- file.path(path, "HARUS_tidydata.txt")
   write.table(dtTidy, f, quote=FALSE, sep="\t", row.names=FALSE)

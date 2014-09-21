@@ -62,6 +62,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="TOC">
 <ul>
 <li><a href="#source">Source</a></li>
+<li><a href="#about-the-contents-of-the-repo">About the contents of the repo</a></li>
 <li><a href="#methods-for-collection">Methods for collection</a></li>
 <li><a href="#attribute-information">Attribute Information</a></li>
 <li><a href="#citation-request">Citation Request:</a></li>
@@ -73,10 +74,16 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </ul>
 </div>
 
-<p>Codebook was generated on 2014-09-21 16:52:56 during the same process that generated the dataset. See <code>run_analysis.r</code>.</p>
+<p>Codebook was generated on 2014-09-21 17:13:43 during the same process that generated the dataset. See <code>run_analysis.r</code>.</p>
 <div id="source" class="section level1">
 <h1>Source</h1>
 <p>Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto. Smartlab - Non Linear Complex Systems Laboratory DITEN - UniversitÃ degli Studi di Genova, Genoa I-16145, Italy. activityrecognition ‘@’ smartlab.ws www.smartlab.ws</p>
+</div>
+<div id="about-the-contents-of-the-repo" class="section level1">
+<h1>About the contents of the repo</h1>
+<p>The Codebook rmd is an r markdown file that explains the data, and <strong>from that markdown file the analysis script is called</strong>. The data is also contained in this repo.</p>
+<p>The script merges the training and test datasets, and outputs a tidy dataset which has an observation for sd, average for every combination of features.</p>
+<p><strong>This Readme is derived from Codebook.Rmd.</strong></p>
 </div>
 <div id="methods-for-collection" class="section level1">
 <h1>Methods for collection</h1>
@@ -105,47 +112,47 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <tbody>
 <tr class="odd">
 <td align="left">subject</td>
-<td align="left">ID for subject</td>
+<td align="left">An identifier of the subject who carried out the experiment</td>
 </tr>
 <tr class="even">
 <td align="left">activity</td>
-<td align="left">What activity</td>
+<td align="left">Activity label</td>
 </tr>
 <tr class="odd">
-<td align="left">featDomain</td>
-<td align="left">Time domain signal or frequency domain signal (Time or Freq)</td>
+<td align="left">varDomain</td>
+<td align="left">Time or domain signal</td>
 </tr>
 <tr class="even">
-<td align="left">featInstrument</td>
-<td align="left">Measuring instrument (Accelerometer or Gyroscope)</td>
+<td align="left">varInstrument</td>
+<td align="left">Accelerometer or Gyroscope</td>
 </tr>
 <tr class="odd">
-<td align="left">featAcceleration</td>
-<td align="left">Acceleration signal (Body or Gravity)</td>
+<td align="left">varAcceleration</td>
+<td align="left">Body or Gravity</td>
 </tr>
 <tr class="even">
-<td align="left">featVariable</td>
-<td align="left">Variable (Mean or SD)</td>
+<td align="left">varVariable</td>
+<td align="left">Mean or SD</td>
 </tr>
 <tr class="odd">
-<td align="left">featJerk</td>
+<td align="left">varJerk</td>
 <td align="left">Jerk signal</td>
 </tr>
 <tr class="even">
-<td align="left">featMagnitude</td>
+<td align="left">varMagnitude</td>
 <td align="left">Magnitude of the signals calculated using the Euclidean norm</td>
 </tr>
 <tr class="odd">
-<td align="left">featAxis</td>
+<td align="left">varAxis</td>
 <td align="left">3-axial signals in the X, Y and Z directions (X, Y, or Z)</td>
 </tr>
 <tr class="even">
-<td align="left">featCount</td>
-<td align="left">Count of data points used to compute <code>average</code></td>
+<td align="left">varCount</td>
+<td align="left">Number of datapoints in the average</td>
 </tr>
 <tr class="odd">
-<td align="left">featAverage</td>
-<td align="left">Average of each variable for each activity and each subject</td>
+<td align="left">varAverage</td>
+<td align="left">The computed variable</td>
 </tr>
 </tbody>
 </table>
@@ -283,31 +290,31 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 ## 
 ## &gt; x &lt;- matrix(c(grepthis(&quot;^t&quot;), grepthis(&quot;^f&quot;)), ncol = nrow(y))
 ## 
-## &gt; dt$featDomain &lt;- factor(x %*% y, labels = c(&quot;Time&quot;, 
+## &gt; dt$varDomain &lt;- factor(x %*% y, labels = c(&quot;Time&quot;, 
 ## +     &quot;Freq&quot;))
 ## 
 ## &gt; x &lt;- matrix(c(grepthis(&quot;Acc&quot;), grepthis(&quot;Gyro&quot;)), 
 ## +     ncol = nrow(y))
 ## 
-## &gt; dt$featInstrument &lt;- factor(x %*% y, labels = c(&quot;Accelerometer&quot;, 
+## &gt; dt$varInstrument &lt;- factor(x %*% y, labels = c(&quot;Accelerometer&quot;, 
 ## +     &quot;Gyroscope&quot;))
 ## 
 ## &gt; x &lt;- matrix(c(grepthis(&quot;BodyAcc&quot;), grepthis(&quot;GravityAcc&quot;)), 
 ## +     ncol = nrow(y))
 ## 
-## &gt; dt$featAcceleration &lt;- factor(x %*% y, labels = c(NA, 
+## &gt; dt$varAcceleration &lt;- factor(x %*% y, labels = c(NA, 
 ## +     &quot;Body&quot;, &quot;Gravity&quot;))
 ## 
 ## &gt; x &lt;- matrix(c(grepthis(&quot;mean()&quot;), grepthis(&quot;std()&quot;)), 
 ## +     ncol = nrow(y))
 ## 
-## &gt; dt$featVariable &lt;- factor(x %*% y, labels = c(&quot;Mean&quot;, 
+## &gt; dt$varVariable &lt;- factor(x %*% y, labels = c(&quot;Mean&quot;, 
 ## +     &quot;SD&quot;))
 ## 
-## &gt; dt$featJerk &lt;- factor(grepthis(&quot;Jerk&quot;), labels = c(NA, 
+## &gt; dt$varJerk &lt;- factor(grepthis(&quot;Jerk&quot;), labels = c(NA, 
 ## +     &quot;Jerk&quot;))
 ## 
-## &gt; dt$featMagnitude &lt;- factor(grepthis(&quot;Mag&quot;), labels = c(NA, 
+## &gt; dt$varMagnitude &lt;- factor(grepthis(&quot;Mag&quot;), labels = c(NA, 
 ## +     &quot;Magnitude&quot;))
 ## 
 ## &gt; n &lt;- 3
@@ -317,20 +324,20 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 ## &gt; x &lt;- matrix(c(grepthis(&quot;-X&quot;), grepthis(&quot;-Y&quot;), grepthis(&quot;-Z&quot;)), 
 ## +     ncol = nrow(y))
 ## 
-## &gt; dt$featAxis &lt;- factor(x %*% y, labels = c(NA, &quot;X&quot;, 
+## &gt; dt$varAxis &lt;- factor(x %*% y, labels = c(NA, &quot;X&quot;, 
 ## +     &quot;Y&quot;, &quot;Z&quot;))
 ## 
 ## &gt; r1 &lt;- nrow(dt[, .N, by = c(&quot;feature&quot;)])
 ## 
-## &gt; r2 &lt;- nrow(dt[, .N, by = c(&quot;featDomain&quot;, &quot;featAcceleration&quot;, 
-## +     &quot;featInstrument&quot;, &quot;featJerk&quot;, &quot;featMagnitude&quot;, &quot;featVariable&quot;, 
-## +     &quot;featAxis&quot; .... [TRUNCATED] 
+## &gt; r2 &lt;- nrow(dt[, .N, by = c(&quot;varDomain&quot;, &quot;varAcceleration&quot;, 
+## +     &quot;varInstrument&quot;, &quot;varJerk&quot;, &quot;varMagnitude&quot;, &quot;varVariable&quot;, 
+## +     &quot;varAxis&quot;)])
 ## 
 ## &gt; r1 == r2
 ## [1] TRUE
 ## 
-## &gt; setkey(dt, subject, activity, featDomain, featAcceleration, 
-## +     featInstrument, featJerk, featMagnitude, featVariable, featAxis)
+## &gt; setkey(dt, subject, activity, varDomain, varAcceleration, 
+## +     varInstrument, varJerk, varMagnitude, varVariable, varAxis)
 ## 
 ## &gt; dtTidy &lt;- dt[, list(count = .N, average = mean(value)), 
 ## +     by = key(dt)]
@@ -344,55 +351,55 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h1>Dataset structure</h1>
 <pre class="r"><code>str(dtTidy)</code></pre>
 <pre><code>## Classes 'data.table' and 'data.frame':   11880 obs. of  11 variables:
-##  $ subject         : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ activity        : Factor w/ 6 levels &quot;LAYING&quot;,&quot;SITTING&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ featDomain      : Factor w/ 2 levels &quot;Time&quot;,&quot;Freq&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ featAcceleration: Factor w/ 3 levels NA,&quot;Body&quot;,&quot;Gravity&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ featInstrument  : Factor w/ 2 levels &quot;Accelerometer&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
-##  $ featJerk        : Factor w/ 2 levels NA,&quot;Jerk&quot;: 1 1 1 1 1 1 1 1 2 2 ...
-##  $ featMagnitude   : Factor w/ 2 levels NA,&quot;Magnitude&quot;: 1 1 1 1 1 1 2 2 1 1 ...
-##  $ featVariable    : Factor w/ 2 levels &quot;Mean&quot;,&quot;SD&quot;: 1 1 1 2 2 2 1 2 1 1 ...
-##  $ featAxis        : Factor w/ 4 levels NA,&quot;X&quot;,&quot;Y&quot;,&quot;Z&quot;: 2 3 4 2 3 4 1 1 2 3 ...
-##  $ count           : int  50 50 50 50 50 50 50 50 50 50 ...
-##  $ average         : num  -0.0166 -0.0645 0.1487 -0.8735 -0.9511 ...
-##  - attr(*, &quot;sorted&quot;)= chr  &quot;subject&quot; &quot;activity&quot; &quot;featDomain&quot; &quot;featAcceleration&quot; ...
+##  $ subject        : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ activity       : Factor w/ 6 levels &quot;LAYING&quot;,&quot;SITTING&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ varDomain      : Factor w/ 2 levels &quot;Time&quot;,&quot;Freq&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ varAcceleration: Factor w/ 3 levels NA,&quot;Body&quot;,&quot;Gravity&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ varInstrument  : Factor w/ 2 levels &quot;Accelerometer&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ varJerk        : Factor w/ 2 levels NA,&quot;Jerk&quot;: 1 1 1 1 1 1 1 1 2 2 ...
+##  $ varMagnitude   : Factor w/ 2 levels NA,&quot;Magnitude&quot;: 1 1 1 1 1 1 2 2 1 1 ...
+##  $ varVariable    : Factor w/ 2 levels &quot;Mean&quot;,&quot;SD&quot;: 1 1 1 2 2 2 1 2 1 1 ...
+##  $ varAxis        : Factor w/ 4 levels NA,&quot;X&quot;,&quot;Y&quot;,&quot;Z&quot;: 2 3 4 2 3 4 1 1 2 3 ...
+##  $ count          : int  50 50 50 50 50 50 50 50 50 50 ...
+##  $ average        : num  -0.0166 -0.0645 0.1487 -0.8735 -0.9511 ...
+##  - attr(*, &quot;sorted&quot;)= chr  &quot;subject&quot; &quot;activity&quot; &quot;varDomain&quot; &quot;varAcceleration&quot; ...
 ##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
 </div>
 <div id="several-rows" class="section level1">
 <h1>Several rows</h1>
 <pre class="r"><code>head(dtTidy)</code></pre>
-<pre><code>##    subject activity featDomain featAcceleration featInstrument featJerk
-## 1:       1   LAYING       Time               NA      Gyroscope       NA
-## 2:       1   LAYING       Time               NA      Gyroscope       NA
-## 3:       1   LAYING       Time               NA      Gyroscope       NA
-## 4:       1   LAYING       Time               NA      Gyroscope       NA
-## 5:       1   LAYING       Time               NA      Gyroscope       NA
-## 6:       1   LAYING       Time               NA      Gyroscope       NA
-##    featMagnitude featVariable featAxis count  average
-## 1:            NA         Mean        X    50 -0.01655
-## 2:            NA         Mean        Y    50 -0.06449
-## 3:            NA         Mean        Z    50  0.14869
-## 4:            NA           SD        X    50 -0.87354
-## 5:            NA           SD        Y    50 -0.95109
-## 6:            NA           SD        Z    50 -0.90828</code></pre>
+<pre><code>##    subject activity varDomain varAcceleration varInstrument varJerk
+## 1:       1   LAYING      Time              NA     Gyroscope      NA
+## 2:       1   LAYING      Time              NA     Gyroscope      NA
+## 3:       1   LAYING      Time              NA     Gyroscope      NA
+## 4:       1   LAYING      Time              NA     Gyroscope      NA
+## 5:       1   LAYING      Time              NA     Gyroscope      NA
+## 6:       1   LAYING      Time              NA     Gyroscope      NA
+##    varMagnitude varVariable varAxis count  average
+## 1:           NA        Mean       X    50 -0.01655
+## 2:           NA        Mean       Y    50 -0.06449
+## 3:           NA        Mean       Z    50  0.14869
+## 4:           NA          SD       X    50 -0.87354
+## 5:           NA          SD       Y    50 -0.95109
+## 6:           NA          SD       Z    50 -0.90828</code></pre>
 </div>
 <div id="summary-of-the-variables" class="section level1">
 <h1>Summary of the variables</h1>
 <pre class="r"><code>summary(dtTidy)</code></pre>
-<pre><code>##     subject                   activity    featDomain  featAcceleration
-##  Min.   : 1.0   LAYING            :1980   Time:7200   NA     :4680    
-##  1st Qu.: 8.0   SITTING           :1980   Freq:4680   Body   :5760    
-##  Median :15.5   STANDING          :1980               Gravity:1440    
-##  Mean   :15.5   WALKING           :1980                               
-##  3rd Qu.:23.0   WALKING_DOWNSTAIRS:1980                               
-##  Max.   :30.0   WALKING_UPSTAIRS  :1980                               
-##        featInstrument featJerk      featMagnitude  featVariable featAxis 
-##  Accelerometer:7200   NA  :7200   NA       :8640   Mean:5940    NA:3240  
-##  Gyroscope    :4680   Jerk:4680   Magnitude:3240   SD  :5940    X :2880  
-##                                                                 Y :2880  
-##                                                                 Z :2880  
-##                                                                          
-##                                                                          
+<pre><code>##     subject                   activity    varDomain   varAcceleration
+##  Min.   : 1.0   LAYING            :1980   Time:7200   NA     :4680   
+##  1st Qu.: 8.0   SITTING           :1980   Freq:4680   Body   :5760   
+##  Median :15.5   STANDING          :1980               Gravity:1440   
+##  Mean   :15.5   WALKING           :1980                              
+##  3rd Qu.:23.0   WALKING_DOWNSTAIRS:1980                              
+##  Max.   :30.0   WALKING_UPSTAIRS  :1980                              
+##        varInstrument  varJerk        varMagnitude  varVariable varAxis  
+##  Accelerometer:7200   NA  :7200   NA       :8640   Mean:5940   NA:3240  
+##  Gyroscope    :4680   Jerk:4680   Magnitude:3240   SD  :5940   X :2880  
+##                                                                Y :2880  
+##                                                                Z :2880  
+##                                                                         
+##                                                                         
 ##      count         average       
 ##  Min.   :36.0   Min.   :-0.9977  
 ##  1st Qu.:49.0   1st Qu.:-0.9621  
