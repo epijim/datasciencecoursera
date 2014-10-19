@@ -12,7 +12,8 @@ output:
 library(lattice)
 library(knitr)
 library(ggplot2)
-setwd("~/datasciencecoursera/repoducible/assignment1")
+working_dir <- "~/datasciencecoursera/repoducible/assignment1/"
+setwd(working_dir)
 raw_data <- as.data.frame(read.csv(file = "activity.csv", header = TRUE))
 data <- raw_data
 ```
@@ -69,7 +70,7 @@ ggplot(data=daily_data,
     xlab("Date") + ylab("Number of steps") +
     ggtitle("Figure one: number of steps taken daily") +
   theme_bw()
-ggsave("/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure1.png")
+ggsave(paste0(working_dir,"figure/figure1.png"))
 ```
 
 ## What is the average daily activity pattern?
@@ -101,7 +102,7 @@ ggplot(data=interval_data,
   xlab("Interval")+ylab("Steps") +
   theme_bw()
 
-ggsave("/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure2.png")
+ggsave(paste0(working_dir,"figure/figure2.png"))
 ```
 
 ## Imputing missing values
@@ -140,7 +141,7 @@ ggplot(data=daily_imputeddata,
     ggtitle("Figure three: number of steps taken daily with imputed data \n(using the mean of each interval)") +
   theme_bw()
 
-ggsave("/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure3.png")
+ggsave(paste0(working_dir,"figure/figure3.png"))
 ```
 
 Display the means and medians of the complete case *(no missing data)* and the
@@ -182,6 +183,6 @@ xyplot(steps ~ interval | split_week,
        layout = c(1, 2), ylab = "Average Number of Steps by time of week")
 
 dev.copy(png,
-         filename="/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure4.png");
+         filename=paste0(working_dir,"figure/figure4.png"));
 dev.off ();
 ```

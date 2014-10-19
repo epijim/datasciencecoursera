@@ -8,7 +8,8 @@
 library(lattice)
 library(knitr)
 library(ggplot2)
-setwd("~/datasciencecoursera/repoducible/assignment1")
+working_dir <- "~/datasciencecoursera/repoducible/assignment1/"
+setwd(working_dir)
 raw_data <- as.data.frame(read.csv(file = "activity.csv", header = TRUE))
 data <- raw_data
 ```
@@ -96,7 +97,7 @@ ggplot(data=daily_data,
 ![plot of chunk unnamed-chunk-7](./PA1_template_files/figure-html/unnamed-chunk-7.png) 
 
 ```r
-ggsave("/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure1.png")
+ggsave(paste0(working_dir,"figure/figure1.png"))
 ```
 
 ```
@@ -144,7 +145,7 @@ ggplot(data=interval_data,
 ![plot of chunk unnamed-chunk-10](./PA1_template_files/figure-html/unnamed-chunk-10.png) 
 
 ```r
-ggsave("/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure2.png")
+ggsave(paste0(working_dir,"figure/figure2.png"))
 ```
 
 ```
@@ -199,7 +200,7 @@ ggplot(data=daily_imputeddata,
 ![plot of chunk unnamed-chunk-13](./PA1_template_files/figure-html/unnamed-chunk-13.png) 
 
 ```r
-ggsave("/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure3.png")
+ggsave(paste0(working_dir,"figure/figure3.png"))
 ```
 
 ```
@@ -261,7 +262,7 @@ xyplot(steps ~ interval | split_week,
 
 ```r
 dev.copy(png,
-         filename="/Users/Jimmy/datasciencecoursera/repoducible/assignment1/figure/figure4.png");
+         filename=paste0(working_dir,"figure/figure4.png"));
 ```
 
 ```
